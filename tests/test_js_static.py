@@ -258,6 +258,13 @@ def test_consent_js_stores_iso_time():
     assert 'isoTime' in _read('consent.js')
 
 
+def test_consent_js_requires_legal_confirmation_before_recording():
+    js = _read('consent.js')
+    assert 'getElementById("confirm-legal")' in js
+    assert 'Please confirm the legal attestation before recording' in js
+    assert 'return;' in js
+
+
 # ── ui.js ──────────────────────────────────────────────────────────────────────
 
 
