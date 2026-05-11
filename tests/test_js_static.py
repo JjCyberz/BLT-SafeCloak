@@ -260,10 +260,15 @@ def test_consent_js_stores_iso_time():
 
 def test_consent_js_requires_legal_confirmation_before_recording():
     js = _read('consent.js')
-    assert 'getElementById("confirm-legal")' in js
-    assert '!confirmLegal || !confirmLegal.checked' in js
-    assert 'Please confirm the legal attestation before recording' in js
-    assert 'return;' in js
+    checkbox_lookup = js.find('getElementById("confirm-legal")')
+    fail_closed_check = js.find('!confirmLegal || !confirmLegal.checked', checkbox_lookup)
+    warning_message = js.find('Please confirm the legal attestation before recording', fail_closed_check)
+    early_return = js.find('return;', warning_message)
+
+    assert checkbox_lookup != -1
+    assert fail_closed_check != -1
+    assert warning_message != -1
+    assert early_return != -1
 
 
 # ── ui.js ──────────────────────────────────────────────────────────────────────
