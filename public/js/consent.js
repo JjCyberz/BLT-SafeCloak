@@ -205,7 +205,7 @@ const ConsentManager = (() => {
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const confirmLegal = document.getElementById("confirm-legal");
-        if (confirmLegal && !confirmLegal.checked) {
+        if (!confirmLegal || !confirmLegal.checked) {
           showToast("Please confirm the legal attestation before recording", "warning");
           return;
         }
